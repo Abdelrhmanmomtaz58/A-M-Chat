@@ -1,9 +1,8 @@
 package com.momtaz.amchat.Activites
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.momtaz.amchat.R
+import androidx.appcompat.app.AppCompatActivity
 import com.momtaz.amchat.databinding.ActivitySignInBinding
 
 class SignInActivity : AppCompatActivity() {

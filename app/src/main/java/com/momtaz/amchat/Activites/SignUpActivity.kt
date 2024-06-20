@@ -15,6 +15,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.textSignIn.setOnClickListener { v -> onBackPressedDispatcher.onBackPressed()}
+        binding.textSignIn.setOnClickListener { onBackPressedDispatcher.onBackPressed()}
     }
 }

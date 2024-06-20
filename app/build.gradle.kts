@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -12,6 +13,7 @@ android {
         minSdk = 27
         targetSdk = 34
         versionCode = 1
+        multiDexEnabled = true
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -53,5 +55,13 @@ dependencies {
     implementation("com.intuit.sdp:sdp-android:1.1.1")
 
     implementation("com.makeramen:roundedimageview:2.3.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation ("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-messaging:24.0.0")
+    implementation("com.google.firebase:firebase-firestore:25.0.0")
+
+    val multidex_version = "2.0.1"
+    implementation("androidx.multidex:multidex:$multidex_version")
 
 }
