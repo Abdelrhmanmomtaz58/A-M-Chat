@@ -1,7 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.AMChat" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Base.Theme.AMChat" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#1C2E46</item>
+        <item name="colorPrimaryDark">#142232</item>
+        <item name="colorAccent">#B00020</item>
+        <item name="android:colorBackground">#ECECEC</item>
+        <item name="android:textColorPrimary">#212121</item>
+        <item name="android:textColorSecondary">#757575</item>
+        <item name="android:windowBackground">#FFFFFF</item>
     </style>
+
+    <style name="Theme.AMChat" parent="Base.Theme.AMChat" />
 </resources>
