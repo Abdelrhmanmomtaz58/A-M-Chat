@@ -15,6 +15,10 @@
         android:theme="@style/Theme.AMChat"
         tools:targetApi="31">
         <activity
+            android:name=".Activites.ChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
             android:name=".Activites.UsersActivity"
             android:exported="false" />
         <activity

@@ -1,16 +1,18 @@
 package com.momtaz.amchat.Activites
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
 import com.momtaz.amchat.adapters.UsersAdapter
 import com.momtaz.amchat.databinding.ActivityUsersBinding
+import com.momtaz.amchat.listenrs.UserListener
 import com.momtaz.amchat.models.User
 import com.momtaz.amchat.utilities.Constants
 import com.momtaz.amchat.utilities.PreferenceManager
 
-class UsersActivity : AppCompatActivity() {
+class UsersActivity : AppCompatActivity(),UserListener {
     lateinit var binding: ActivityUsersBinding
     lateinit var preferenceManager: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,12 +44,13 @@ class UsersActivity : AppCompatActivity() {
                            name = queryDocumentSnapshot.getString(Constants.KEY_NAME).toString(),
                            email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL).toString(),
                            image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE).toString(),
-                           token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN).toString()
+                           token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN).toString(),
+                           id = queryDocumentSnapshot.id
                        )
                        users.add(user)
                    }
                     if (users.size>0){
-                        val usersAdapter =UsersAdapter(users)
+                        val usersAdapter =UsersAdapter(users,this)
                         binding.usersRecyclerView.adapter =usersAdapter
                         binding.usersRecyclerView.visibility=View.VISIBLE
                     }else{
@@ -69,5 +72,12 @@ class UsersActivity : AppCompatActivity() {
         }else{
             binding.progressBar.visibility =View.INVISIBLE
         }
+    }
+
+    override fun onUserClicked(user: User) {
+        val intent = Intent(applicationContext, ChatActivity::class.java)
+        intent.putExtra(Constants.KEY_USER, user)
+        startActivity(intent)
+        finish()
     }
 }
