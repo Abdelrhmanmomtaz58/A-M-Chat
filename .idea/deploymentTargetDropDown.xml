@@ -4,14 +4,35 @@
     <value>
       <entry key="app">
         <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\shady\.android\avd\Pixel_3a_API_30.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-06-22T16:56:17.305352200Z" />
           <multipleDevicesSelectedInDropDown value="true" />
           <runningDeviceTargetsSelectedWithDialog>
             <Target>
               <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-R58N30A4RJL-XGjSYy._adb-tls-connect._tcp" />
+                </Key>
+              </deviceKey>
+            </Target>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\shady\.android\avd\Pixel_3a_API_30_new.avd" />
+                  <value value="C:\Users\shady\.android\avd\Pixel_3a_API_30.avd" />
                 </Key>
               </deviceKey>
             </Target>

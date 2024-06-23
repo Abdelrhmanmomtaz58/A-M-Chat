@@ -2,4 +2,14 @@ package com.momtaz.amchat.models
 
 import java.util.Date
 
-data class ChatMessage(val senderId:String,val receiverId:String,val message:String,val dateTime:String,val dataObject: Date)
+class ChatMessage() {
+    var senderId: String? = null
+    var receiverId: String? = null
+    var message: String? = null
+    var dateTime: String? = null
+    var dataObject: Date? = null
+    var conversionId: String? = null
+    var conversionName: String? = null
+    var conversionImage: String? = null
+}
+

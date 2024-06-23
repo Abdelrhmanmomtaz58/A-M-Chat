@@ -2,8 +2,10 @@ package com.momtaz.amchat.models
 
 import java.io.Serializable
 
-data class User(val name:String?
-,val image:String?
-,val email:String?
-,val token:String?
-,val id:String?):Serializable
+class User():Serializable {
+    var name: String? = null
+    var image: String? = null
+    var email: String? = null
+    var token: String? = null
+    var id: String? = null
+}

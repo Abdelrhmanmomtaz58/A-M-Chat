@@ -13,8 +13,8 @@ import com.momtaz.amchat.utilities.PreferenceManager
 
 
 class SignInActivity : AppCompatActivity() {
-    lateinit var binding: ActivitySignInBinding
-    lateinit var preferenceManager: PreferenceManager
+    private lateinit var binding: ActivitySignInBinding
+    private lateinit var preferenceManager: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)

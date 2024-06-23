@@ -1,7 +1,6 @@
 package com.momtaz.amchat.Activites
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,9 +11,9 @@ import com.momtaz.amchat.models.User
 import com.momtaz.amchat.utilities.Constants
 import com.momtaz.amchat.utilities.PreferenceManager
 
-class UsersActivity : AppCompatActivity(),UserListener {
-    lateinit var binding: ActivityUsersBinding
-    lateinit var preferenceManager: PreferenceManager
+class UsersActivity : BaseActivity(),UserListener {
+    private lateinit var binding: ActivityUsersBinding
+    private lateinit var preferenceManager: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUsersBinding.inflate(layoutInflater)
@@ -40,13 +39,15 @@ class UsersActivity : AppCompatActivity(),UserListener {
                        if (currentUserId.equals(queryDocumentSnapshot.id)){
                            continue
                        }
-                       val user = User(
-                           name = queryDocumentSnapshot.getString(Constants.KEY_NAME).toString(),
-                           email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL).toString(),
-                           image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE).toString(),
-                           token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN).toString(),
+                       val user = User().apply {
+                           name = queryDocumentSnapshot.getString(Constants.KEY_NAME).toString()
+                           email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL).toString()
+                           image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE).toString()
+                           token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN).toString()
                            id = queryDocumentSnapshot.id
-                       )
+                       }
+
+
                        users.add(user)
                    }
                     if (users.size>0){

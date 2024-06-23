@@ -21,9 +21,9 @@ import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 
 class SignUpActivity : AppCompatActivity() {
-    lateinit var binding: ActivitySignUpBinding
-    lateinit var preferenceManager: PreferenceManager
-    var encodedImage:String? = null
+    private lateinit var binding: ActivitySignUpBinding
+    private lateinit var preferenceManager: PreferenceManager
+    private var encodedImage:String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -53,10 +53,10 @@ class SignUpActivity : AppCompatActivity() {
         loading(true)
         val database = FirebaseFirestore.getInstance()
         val user = mutableMapOf<String,Any>()
-        user.put(Constants.KEY_NAME,binding.inputName.text.toString())
-        user.put(Constants.KEY_EMAIL,binding.inputEmail.text.toString())
-        user.put(Constants.KEY_PASSWORD,binding.inputPassword.text.toString())
-        user.put(Constants.KEY_IMAGE, encodedImage!!)
+        user[Constants.KEY_NAME] = binding.inputName.text.toString()
+        user[Constants.KEY_EMAIL] = binding.inputEmail.text.toString()
+        user[Constants.KEY_PASSWORD] = binding.inputPassword.text.toString()
+        user[Constants.KEY_IMAGE] = encodedImage!!
         database.collection(Constants.KEY_COLLECTION_USERS)
             .add(user)
             .addOnSuccessListener {documentReference->
@@ -70,9 +70,9 @@ class SignUpActivity : AppCompatActivity() {
                 startActivity(intent)
 
 
-            }.addOnFailureListener {exceptoin ->
+            }.addOnFailureListener {exception ->
                 loading(false)
-                showToast(exceptoin.message.toString())
+                showToast(exception.message.toString())
             }
 
 
