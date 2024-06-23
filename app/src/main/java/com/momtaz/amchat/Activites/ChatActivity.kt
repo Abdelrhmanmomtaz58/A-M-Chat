@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.NonNull
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
@@ -15,8 +17,17 @@ import com.momtaz.amchat.adapters.ChatAdapter
 import com.momtaz.amchat.databinding.ActivityChatBinding
 import com.momtaz.amchat.models.ChatMessage
 import com.momtaz.amchat.models.User
+import com.momtaz.amchat.network.ApiClient
+import com.momtaz.amchat.network.ApiService
 import com.momtaz.amchat.utilities.Constants
 import com.momtaz.amchat.utilities.PreferenceManager
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.create
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -106,6 +117,7 @@ class ChatActivity : BaseActivity() {
 
 
     private fun sendMessage(){
+
         val message = HashMap<String,Any>()
         message[Constants.KEY_SENDER_ID] = preferenceManager.getString(Constants.KEY_USER_ID)!!
         message[Constants.KEY_RECEIVER_ID] = receiverUser.id!!
@@ -126,7 +138,64 @@ class ChatActivity : BaseActivity() {
             conversion[Constants.KEY_TIMESTAMP] = Date()
             addConversion(conversion)
         }
+        if (!isReceiverAvailable){
+            try {
+                val tokens = JSONArray()
+                tokens.put(receiverUser.token)
+
+                val data =JSONObject()
+                data.put(Constants.KEY_USER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
+                data.put(Constants.KEY_NAME,preferenceManager.getString(Constants.KEY_NAME))
+                data.put(Constants.KEY_FCM_TOKEN,preferenceManager.getString(Constants.KEY_FCM_TOKEN))
+                data.put(Constants.KEY_MESSAGE,binding.inputMessage.text.toString())
+
+                val body =JSONObject()
+                body.put(Constants.REMOTE_MSG_DATA,data)
+                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens)
+
+                sendNotification(body.toString())
+            }catch (e:Exception){
+                showToast(e.message.toString())
+            }
+        }
         binding.inputMessage.text=null
+
+    }
+    private fun showToast(message:String){
+        Toast.makeText(applicationContext,message,Toast.LENGTH_LONG).show()
+    }
+    private fun sendNotification(messageBody: String){
+       ApiClient().getClient()?.create(ApiService::class.java)?.sendMessage(
+           Constants.getRemoteMsgHeaders(),messageBody
+       )?.enqueue(object :Callback<String>{
+           override fun onResponse(call: Call<String>, response: Response<String>) {
+              if (response.isSuccessful){
+                  try {
+                      val responseBody = response.body()
+                      if (responseBody != null) {
+                          val responseJson = JSONObject(responseBody)
+                          val results = responseJson.getJSONArray("results")
+                          if (responseJson.getInt("failure") == 1) {
+                              val error = results.getJSONObject(0)
+                              showToast(error.getString("error"))
+                          } else {
+                             // showToast("Notification sent successfully")
+                          }
+                      }
+                  } catch (e: JSONException) {
+                      e.printStackTrace()
+                     // showToast("Error parsing response")
+                  }
+              }else{
+                 // showToast("Error ${response.code()}")
+              }
+           }
+
+           override fun onFailure(call: Call<String>, t: Throwable) {
+               showToast(t.message.toString())
+           }
+
+       })
 
     }
     private fun listenAvailabilityOfReceiver(){
@@ -142,6 +211,7 @@ class ChatActivity : BaseActivity() {
                     )!!.toInt()
                     isReceiverAvailable=availability==1
                 }
+                receiverUser.token =value.getString(Constants.KEY_FCM_TOKEN)
             }
             if (isReceiverAvailable){
                 binding.textAvailability.visibility=View.VISIBLE

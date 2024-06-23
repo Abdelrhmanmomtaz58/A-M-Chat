@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.firestore.DocumentChange
@@ -123,11 +124,14 @@ class MainActivity : BaseActivity(),ConversionListener {
     }
 
     private fun getToken() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener { token -> updateToken(token) }
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token -> updateToken(token)
+        }
     }
 
     private fun updateToken(token: String) {
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN,token)
         val database = FirebaseFirestore.getInstance()
+        Log.i("Token",token.toString())
         val documentReference = database.collection(Constants.KEY_COLLECTION_USERS)
             .document(preferenceManager.getString(Constants.KEY_USER_ID).toString())
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
