@@ -10,15 +10,6 @@
               <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="R58N30A4RJL" />
-                </Key>
-              </deviceKey>
-            </Target>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
                   <value value="C:\Users\shady\.android\avd\Pixel_3a_API_30.avd" />
                 </Key>
