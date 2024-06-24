@@ -22,19 +22,20 @@
         android:background="@color/primary"
         app:layout_constraintBottom_toTopOf="@id/viewSupporter"
         app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/textAvailability"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/headerBackground"
-        android:background="@color/green"
-        android:textSize="@dimen/_10ssp"
-        android:textColor="@color/white"
-        android:padding="@dimen/_2sdp"
-        android:text="@string/online"
         android:gravity="center"
+        android:text="@string/online"
+        android:textColor="@color/green"
+        android:textSize="@dimen/_13ssp"
         android:visibility="gone"
-        />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textName"
+        app:layout_constraintStart_toStartOf="@+id/textName"
+        app:layout_constraintTop_toBottomOf="@+id/textName" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageBack"
@@ -60,11 +61,13 @@
         android:src="@drawable/ic_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/textName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:ellipsize="end"
         android:gravity="center"
@@ -75,8 +78,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageBack"
         app:layout_constraintEnd_toStartOf="@id/imageInfo"
         app:layout_constraintStart_toEndOf="@id/imageBack"
-        app:layout_constraintTop_toTopOf="@id/imageBack"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="user name" />
     <View
         android:background="@color/primary"
         android:id="@+id/viewSupporter"
@@ -99,7 +102,7 @@
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-        app:layout_constraintTop_toBottomOf="@id/textAvailability"/>
+        app:layout_constraintTop_toBottomOf="@+id/headerBackground"/>
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="@dimen/_25sdp"

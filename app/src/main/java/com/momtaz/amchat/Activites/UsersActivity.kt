@@ -24,19 +24,21 @@ class UsersActivity : BaseActivity(),UserListener {
     }
     private fun setListeners(){
         binding.imageBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.addFriend.setOnClickListener { startActivity(Intent(applicationContext,SearchActivity::class.java)) }
     }
     private fun getUsers(){
         loading(true)
+        val currentUserId = preferenceManager.getString(Constants.KEY_USER_ID)
         val database = FirebaseFirestore.getInstance()
-        database.collection(Constants.KEY_COLLECTION_USERS)
+        database.collection(Constants.KEY_COLLECTION_USERS).document(currentUserId!!).collection(Constants.KEY_FRIENDS)
             .get()
             .addOnCompleteListener { task ->
                 loading(false)
-                val currentUserId = preferenceManager.getString(Constants.KEY_USER_ID)
+
                 if (task.isSuccessful&&task.result!=null){
                     val users = ArrayList<User>()
                    for (queryDocumentSnapshot in task.result){
-                       if (currentUserId.equals(queryDocumentSnapshot.id)){
+                       if (currentUserId == queryDocumentSnapshot.id){
                            continue
                        }
                        val user = User().apply {
@@ -55,6 +57,8 @@ class UsersActivity : BaseActivity(),UserListener {
                         binding.usersRecyclerView.adapter =usersAdapter
                         binding.usersRecyclerView.visibility=View.VISIBLE
                     }else{
+                        binding.enp.text="There are no friends yet\nadd some friends"
+                        binding.enp.visibility=View.VISIBLE
                         showErrorMessage()
                     }
                 }else{
