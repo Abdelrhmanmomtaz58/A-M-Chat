@@ -50,4 +50,4 @@ This activity allows users to search for other users by their username or email 
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/am-chat-app.git
+   git clone https://github.com/Abdelrhmanmomtaz58/A-M-Chat
