@@ -54,6 +54,9 @@ class MainActivity : BaseActivity(),ConversionListener {
         binding.fabNewChat.setOnClickListener {
             startActivity(Intent(applicationContext, UsersActivity::class.java))
         }
+        binding.imageProfile.setOnClickListener {
+            startActivity(Intent(applicationContext,InfoActivity::class.java))
+        }
     }
 
     private fun loadUserDetails() {
